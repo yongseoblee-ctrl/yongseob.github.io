@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>군산CCC 순찬양대회 MR 목록</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --bg: #f4f7f8;
+  --surface: #ffffff;
+  --ink: #12263a;
+  --muted: #5b6b7a;
+  --line: #d5dee4;
+  --accent: #0e7c86;
+  --accent-ink: #ffffff;
+  --chip: #e3f0f1;
+  --chip-ink: #0b5b63;
+  --warn: #8a5a00;
+  --warn-bg: #fdf1d8;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1a24; --surface: #16273a; --ink: #e8f0f5; --muted: #9db0bf;
+    --line: #2b4157; --accent: #3ec6d3; --accent-ink: #062a30;
+    --chip: #1d3a4a; --chip-ink: #a9e6ec; --warn: #f2c66d; --warn-bg: #3a2f14;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1a24; --surface: #16273a; --ink: #e8f0f5; --muted: #9db0bf;
+  --line: #2b4157; --accent: #3ec6d3; --accent-ink: #062a30;
+  --chip: #1d3a4a; --chip-ink: #a9e6ec; --warn: #f2c66d; --warn-bg: #3a2f14;
+  color-scheme: dark;
+}
+html { height: 100%; scroll-padding-top: env(safe-area-inset-top, 0px); }
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100%;
+  background: var(--bg); color: var(--ink);
+  font-family: "Gowun Dodum", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-size: 17px; line-height: 1.6;
+}
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 64px; }
+
+header { padding: 56px 0 32px; }
+h1 {
+  font-family: "Black Han Sans", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-weight: 400; font-size: clamp(2.4rem, 8vw, 4.2rem);
+  line-height: 1.1; margin: 0 0 14px; letter-spacing: -0.01em;
+}
+header p { margin: 0; color: var(--muted); max-width: 34em; }
+.count { margin-top: 20px; display: inline-block; padding: 4px 14px; border: 2px solid var(--accent); border-radius: 999px; color: var(--accent); font-size: .95rem; }
+
+.list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+.item { border-bottom: 1px solid var(--line); background: transparent; }
+.row {
+  display: grid; grid-template-columns: 44px 1fr auto; gap: 14px;
+  align-items: center; padding: 22px 4px;
+}
+.no {
+  font-family: "Black Han Sans", sans-serif; font-size: 1.9rem; line-height: 1;
+  color: var(--accent); text-align: center;
+}
+.team { margin: 0; font-size: 1.05rem; color: var(--muted); }
+.song { margin: 2px 0 10px; font-size: 1.4rem; line-height: 1.3; font-weight: 700; }
+.members { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { background: var(--chip); color: var(--chip-ink); padding: 2px 11px; border-radius: 999px; font-size: .92rem; }
+.chip.maybe { background: transparent; border: 1px dashed var(--muted); color: var(--muted); }
+.live {
+  display: inline-block; margin-top: 10px; padding: 3px 12px; border-radius: 8px;
+  background: var(--warn-bg); color: var(--warn); font-size: .92rem;
+}
+
+.play {
+  width: 64px; height: 64px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--accent); color: var(--accent-ink);
+  display: grid; place-items: center; flex: none;
+  transition: transform .15s ease;
+}
+.play:hover { transform: scale(1.06); }
+.play:focus-visible, .open:focus-visible, .theme:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.play svg { width: 26px; height: 26px; fill: currentColor; }
+.nolink { color: var(--muted); font-size: .85rem; text-align: center; width: 64px; }
+
+.player { display: none; padding: 0 4px 22px 62px; }
+.item.on .player { display: block; }
+.frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; }
+.frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.open { display: inline-block; margin-top: 10px; color: var(--accent); font-size: .95rem; }
+
+.theme {
+  position: absolute; right: 16px; top: calc(env(safe-area-inset-top, 0px) + 12px);
+  background: transparent; border: 1px solid var(--line); color: var(--muted);
+  border-radius: 999px; padding: 4px 12px; cursor: pointer; font: inherit; font-size: .85rem;
+}
+footer { margin-top: 28px; color: var(--muted); font-size: .88rem; }
+
+@media (max-width: 560px) {
+  .row { grid-template-columns: 32px 1fr; }
+  .play, .nolink { grid-column: 2; justify-self: start; }
+  .nolink { width: auto; text-align: left; }
+  .player { padding-left: 4px; }
+  .no { font-size: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) { .play { transition: none; } }
+</style>
+</head>
+<body>
+<button class="theme" id="theme" type="button" aria-label="화면 모드 바꾸기">화면 모드</button>
+<div class="wrap">
+  <header>
+    <h1>군산CCC<br>순찬양대회</h1>
+    <p>순별 MR 제출 목록입니다. 재생 버튼을 누르면 아래에서 바로 음원이 재생됩니다.</p>
+    <span class="count" id="count"></span>
+  </header>
+
+  <ol class="list" id="list"></ol>
+
+  <footer>제출 순서대로 정렬했습니다. 괄호로 표시한 참가자는 참여 여부가 확정되지 않은 분입니다.</footer>
+</div>
+
+<script>
+var TEAMS = [
+  { team: "런투유", song: "웨이홈 - 달리기", type: "MR", members: ["이영유","조아라","전유나","최안나","김혜린"], yt: "Mww16ZfMyPI" },
+  { team: "파라클레시스(위로)", song: "God 촛불하나(교회버전)", type: "MR", members: ["이소망","최승원","김용진","차상욱"], yt: "IWCTY6xEFFQ" },
+  { team: "트루포", song: "우리가 주를 더욱 사랑하고", type: "MR", members: ["전유나","임태희","오민서","박시온"], yt: "d_2-MpZE9OA" },
+  { team: "우산", song: "끝까지 남겠네", type: "MR", members: ["최승원","오민서","차상욱"], yt: "FpPiJjfa0rg" },
+  { team: "세겹줄", song: "나로부터 시작되리", type: "MR", members: ["임태희","문예빈"], yt: "UkVoIeNWFug" },
+  { team: "군평 악단", song: "광야를 지나며", type: "반주", members: ["이효빈","김용진","(임태희)"], need: "피아노, 마이크 2개", yt: "" }
+];
+
+var list = document.getElementById("list");
+document.getElementById("count").textContent = "총 " + TEAMS.length + "팀";
+
+function el(tag, cls, text) {
+  var n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text) n.textContent = text;
+  return n;
+}
+
+function closeAll() {
+  list.querySelectorAll(".item.on").forEach(function (it) {
+    it.classList.remove("on");
+    var f = it.querySelector(".frame");
+    if (f) f.innerHTML = "";
+    var b = it.querySelector(".play");
+    if (b) { b.setAttribute("aria-expanded", "false"); b.setAttribute("aria-label", it.dataset.song + " 재생"); b.innerHTML = PLAY; }
+  });
+}
+
+var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>';
+var STOP = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
+
+TEAMS.forEach(function (t, i) {
+  var li = el("li", "item");
+  li.dataset.song = t.song;
+
+  var row = el("div", "row");
+  row.appendChild(el("div", "no", String(i + 1)));
+
+  var info = el("div", "info");
+  info.appendChild(el("p", "team", t.team));
+  info.appendChild(el("h2", "song", t.song));
+  var ms = el("div", "members");
+  t.members.forEach(function (m) {
+    var maybe = m.charAt(0) === "(";
+    ms.appendChild(el("span", "chip" + (maybe ? " maybe" : ""), m));
+  });
+  info.appendChild(ms);
+  if (t.type === "반주") {
+    info.appendChild(el("span", "live", "라이브 반주 · 필요한 악기: " + (t.need || "")));
+  }
+  row.appendChild(info);
+
+  if (t.yt) {
+    var btn = el("button", "play");
+    btn.type = "button";
+    btn.innerHTML = PLAY;
+    btn.setAttribute("aria-label", t.song + " 재생");
+    btn.setAttribute("aria-expanded", "false");
+    row.appendChild(btn);
+
+    var player = el("div", "player");
+    var frame = el("div", "frame");
+    player.appendChild(frame);
+    var a = el("a", "open", "오류가 뜨면 여기를 눌러 YouTube에서 재생");
+    a.href = "https://www.youtube.com/watch?v=" + t.yt;
+    a.target = "_blank"; a.rel = "noopener";
+    player.appendChild(a);
+
+    btn.addEventListener("click", function () {
+      var wasOn = li.classList.contains("on");
+      closeAll();
+      if (wasOn) return;
+      var ifr = document.createElement("iframe");
+      ifr.src = "https://www.youtube.com/embed/" + t.yt + "?autoplay=1&rel=0&playsinline=1&origin=" + encodeURIComponent(location.origin && location.origin !== "null" ? location.origin : "https://claude.ai");
+      ifr.title = t.team + " - " + t.song;
+      ifr.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      ifr.allowFullscreen = true;
+      ifr.referrerPolicy = "strict-origin-when-cross-origin";
+      frame.appendChild(ifr);
+      li.classList.add("on");
+      btn.setAttribute("aria-expanded", "true");
+      btn.setAttribute("aria-label", t.song + " 정지");
+      btn.innerHTML = STOP;
+    });
+
+    li.appendChild(row);
+    li.appendChild(player);
+  } else {
+    row.appendChild(el("div", "nolink", "MR 링크 없음"));
+    li.appendChild(row);
+  }
+  list.appendChild(li);
+});
+
+document.getElementById("theme").addEventListener("click", function () {
+  var root = document.documentElement;
+  var dark = root.getAttribute("data-theme") === "dark" ||
+    (!root.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  root.setAttribute("data-theme", dark ? "light" : "dark");
+});
+</script>
+</body>
+</html>
